@@ -1,0 +1,1354 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base Styles */
+@layer base {
+  body {
+    @apply font-sans antialiased bg-gray-50 text-gray-900;
+  }
+}
+
+/* Components */
+@layer components {
+  /* Buttons */
+  .btn {
+    @apply px-6 py-3 rounded-lg font-semibold transition-all duration-300 inline-flex items-center justify-center gap-2;
+  }
+
+  .btn-primary {
+    @apply bg-gradient-to-r from-primary-500 to-accent text-white shadow-lg transition-all duration-300;
+  }
+
+  .btn-primary:hover {
+    @apply from-primary-600 to-accent-dark;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-primary-600 border-2 border-primary-500 hover:bg-primary-50;
+  }
+
+  .btn-danger {
+    @apply bg-danger text-white hover:bg-danger-dark;
+  }
+
+  /* Card */
+  .card {
+    @apply bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300;
+  }
+
+  /* Property Card */
+  .property-card {
+    @apply card overflow-hidden cursor-pointer;
+  }
+
+  .property-card img {
+    @apply w-full h-64 object-cover transition-transform duration-500;
+  }
+
+  /* Hover effect for group */
+  .property-card.group:hover img {
+    @apply scale-105;
+  }
+
+  /* Property List Item */
+  .property-list-item {
+    @apply transition-all duration-300;
+  }
+
+  .property-list-item:hover {
+    @apply transform scale-[1.01];
+  }
+
+  /* Form Inputs */
+  .form-input {
+    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all;
+  }
+
+  .form-label {
+    @apply block text-sm font-semibold text-gray-700 mb-2;
+  }
+
+  /* Badges */
+  .badge {
+    @apply px-3 py-1 rounded-full text-xs font-semibold;
+  }
+
+  .badge-sale {
+    @apply bg-danger text-white;
+  }
+
+  .badge-rent {
+    @apply bg-blue-500 text-white;
+  }
+
+  .badge-new {
+    @apply bg-accent text-gray-900;
+  }
+
+  /* Skeleton Loader */
+  .skeleton {
+    @apply animate-pulse bg-gray-200 rounded;
+  }
+
+  /* Sticky Header */
+  .header-sticky {
+    @apply fixed top-0 left-0 right-0 z-50 bg-white shadow-md transition-all duration-300;
+  }
+}
+
+/* Utilities */
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary-500 to-accent bg-clip-text text-transparent;
+  }
+
+  .bg-gradient-primary {
+    @apply bg-gradient-to-r from-primary-500 to-accent;
+  }
+
+  /* Arrow badge clip */
+  .clip-arrow-right {
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%);
+  }
+}
+
+/* Toast Notifications - ALWAYS on top */
+.toast-container {
+  position: fixed !important;
+  top: 1rem !important;
+  right: 1rem !important;
+  z-index: 999999 !important; /* Increased to be above everything */
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.5rem !important;
+  pointer-events: none !important;
+  max-width: 400px !important;
+  will-change: transform;
+  margin: 0 !important;
+  padding: 0 !important;
+  isolation: isolate; /* Create new stacking context */
+}
+
+/* Ensure toast container is above all dashboard elements */
+body .toast-container,
+#app .toast-container,
+main .toast-container {
+  z-index: 999999 !important;
+}
+
+.toast {
+  min-width: 300px !important;
+  max-width: 400px !important;
+  padding: 1rem 1.5rem !important;
+  border-radius: 0.75rem !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25), 0 10px 10px -5px rgba(0, 0, 0, 0.15) !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+  transform: translateX(150%);
+  transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55), 
+              opacity 0.4s ease-out !important;
+  opacity: 0;
+  pointer-events: auto !important;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  margin: 0 !important;
+  position: relative !important;
+  flex-shrink: 0 !important;
+  z-index: 1 !important; /* Ensure stacking within container */
+}
+
+.toast-success {
+  @apply bg-green-500 text-white;
+}
+
+.toast-error {
+  @apply bg-red-500 text-white;
+}
+
+.toast-warning {
+  @apply bg-yellow-500 text-gray-900;
+}
+
+.toast-info {
+  @apply bg-blue-500 text-white;
+}
+
+/* Toast Slide-in Animation */
+@keyframes slide-in {
+  from {
+    transform: translateX(150%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Mobile responsive toast positioning */
+@media (max-width: 768px) {
+  .toast-container {
+    top: 0.5rem !important;
+    right: 0.5rem !important;
+    left: 0.5rem !important;
+    max-width: calc(100vw - 1rem) !important;
+    z-index: 999999 !important;
+  }
+  
+  .toast {
+    min-width: 100% !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 0.875rem 1rem !important;
+    font-size: 0.875rem !important;
+  }
+}
+
+/* Small mobile screens */
+@media (max-width: 390px) {
+  .toast-container {
+    top: 0.25rem !important;
+    right: 0.25rem !important;
+    left: 0.25rem !important;
+    max-width: calc(100vw - 0.5rem) !important;
+  }
+  
+  .toast {
+    padding: 0.75rem 0.875rem !important;
+    font-size: 0.8125rem !important;
+  }
+}
+
+/* Loader Spinner */
+.spinner {
+  @apply inline-block w-8 h-8 border-4 border-gray-200 border-t-primary-500 rounded-full animate-spin;
+}
+
+/* Custom Scrollbar Styles for Sidebars */
+aside nav::-webkit-scrollbar,
+nav.overflow-y-auto::-webkit-scrollbar {
+  width: 6px;
+}
+
+aside nav::-webkit-scrollbar-track,
+nav.overflow-y-auto::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+}
+
+aside nav::-webkit-scrollbar-thumb,
+nav.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.3);
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+aside nav::-webkit-scrollbar-thumb:hover,
+nav.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: rgba(156, 163, 175, 0.5);
+}
+
+/* Firefox scrollbar */
+aside nav,
+nav.overflow-y-auto {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.3) transparent;
+}
+
+/* Table Overflow Fix - Desktop and Mobile */
+/* Prevent page horizontal overflow */
+html {
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+
+/* Only apply overflow-x-hidden to main in admin/dashboard layouts */
+body > main {
+  overflow-x: hidden;
+}
+
+/* Container fixes - ensure containers don't overflow */
+.container {
+  width: 100%;
+  max-width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  box-sizing: border-box;
+}
+
+/* Grid fixes to prevent overflow - critical for responsive grids */
+.grid {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.grid > * {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Flex fixes */
+.flex {
+  min-width: 0;
+}
+
+.flex > * {
+  min-width: 0;
+}
+
+/* Card fixes */
+.card {
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.card.overflow-hidden {
+  overflow-x: hidden;
+}
+
+.card .overflow-x-auto {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+  display: block;
+}
+
+/* Prevent table cells from wrapping */
+.overflow-x-auto table th,
+.overflow-x-auto table td {
+  white-space: nowrap;
+}
+
+/* Ensure table maintains minimum width */
+.overflow-x-auto table {
+  min-width: max-content;
+  width: 100%;
+}
+
+/* Mobile Responsive Tables */
+@media (max-width: 768px) {
+  /* Prevent all overflow - BUT NOT header elements */
+  *:not(header):not(header *) {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* Header elements need different handling */
+  header,
+  header * {
+    box-sizing: border-box;
+  }
+  
+  /* Dashboard Card Icon Containers - MUST maintain fixed dimensions on mobile */
+  /* Target all icon containers with fixed width classes */
+  .w-12.h-12,
+  .w-14.h-14,
+  .w-16.h-16,
+  div[class*="w-12"][class*="h-12"],
+  div[class*="w-14"][class*="h-14"],
+  div[class*="w-16"][class*="h-16"] {
+    max-width: none !important;
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+  }
+  
+  /* Specific icon containers in cards */
+  .card .w-12.h-12,
+  .card .w-14.h-14,
+  .card .w-16.h-16,
+  [class*="bg-gradient"] .w-12.h-12,
+  [class*="bg-gradient"] .w-14.h-14,
+  [class*="bg-gradient"] .w-16.h-16,
+  [class*="bg-white"] .w-12.h-12,
+  [class*="bg-white"] .w-14.h-14,
+  [class*="bg-white"] .w-16.h-16,
+  [class*="rounded-xl"] .w-12.h-12,
+  [class*="rounded-xl"] .w-14.h-14,
+  [class*="rounded-xl"] .w-16.h-16 {
+    width: 3rem !important; /* w-12 = 48px */
+    height: 3rem !important;
+    min-width: 3rem !important;
+    min-height: 3rem !important;
+    max-width: 3rem !important;
+    max-height: 3rem !important;
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+  }
+  
+  /* w-14 icons (56px) */
+  .card .w-14.h-14,
+  [class*="bg-gradient"] .w-14.h-14,
+  [class*="bg-white"] .w-14.h-14,
+  [class*="rounded-xl"] .w-14.h-14 {
+    width: 3.5rem !important; /* w-14 = 56px */
+    height: 3.5rem !important;
+    min-width: 3.5rem !important;
+    min-height: 3.5rem !important;
+    max-width: 3.5rem !important;
+    max-height: 3.5rem !important;
+  }
+  
+  /* w-16 icons (64px) */
+  .card .w-16.h-16,
+  [class*="bg-gradient"] .w-16.h-16,
+  [class*="bg-white"] .w-16.h-16,
+  [class*="rounded-xl"] .w-16.h-16 {
+    width: 4rem !important; /* w-16 = 64px */
+    height: 4rem !important;
+    min-width: 4rem !important;
+    min-height: 4rem !important;
+    max-width: 4rem !important;
+    max-height: 4rem !important;
+  }
+  
+  /* Ensure parent flex containers don't expand icons */
+  .flex.items-center.justify-between .w-12.h-12,
+  .flex.items-center.justify-between .w-14.h-14,
+  .flex.items-center.justify-between .w-16.h-16 {
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+    max-width: none !important;
+  }
+  
+  /* Admin Dashboard - Remove padding on mobile */
+  body > main {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    overflow-x: hidden !important;
+  }
+  
+  /* Admin Dashboard content wrapper */
+  body > main > div {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    overflow-x: hidden !important;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  /* Responsive form inputs - prevent overflow */
+  .form-input {
+    font-size: 16px; /* Prevents zoom on iOS */
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  
+  /* Select and textarea inputs */
+  select.form-input,
+  textarea.form-input {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box;
+  }
+  
+  /* Responsive buttons - prevent overflow and align correctly */
+  .btn {
+    width: 100%;
+    max-width: 100%;
+    justify-content: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+  }
+  
+  /* Button containers - but NOT for ANY header or card icon rows */
+  .flex.items-center.justify-between:not(header .flex):not(header.flex):not(:has(.w-12)):not(:has(.w-14)):not(:has(.w-16)),
+  .flex.items-center.gap-4:not(header .flex):not(header.flex):not(:has(.w-12)):not(:has(.w-14)):not(:has(.w-16)),
+  body > main .flex.items-center.justify-between:not(header .flex):not(:has(.w-12)):not(:has(.w-14)):not(:has(.w-16)),
+  body > main .flex.items-center.gap-4:not(header .flex):not(:has(.w-12)):not(:has(.w-14)):not(:has(.w-16)) {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  /* Card rows with icons - NEVER wrap */
+  .flex.items-center.justify-between:has(.w-12),
+  .flex.items-center.justify-between:has(.w-14),
+  .flex.items-center.justify-between:has(.w-16),
+  .flex.items-center:has(.w-12),
+  .flex.items-center:has(.w-14),
+  .flex.items-center:has(.w-16) {
+    flex-wrap: nowrap !important;
+    gap: 0.5rem !important;
+  }
+  
+  /* Header specific - NEVER wrap - Only for main site header, NOT admin dashboard */
+  #main-header .flex.items-center.justify-between,
+  #main-header .flex.items-center,
+  #main-header .flex {
+    flex-wrap: nowrap !important;
+    flex-direction: row !important;
+  }
+  
+  /* Admin dashboard header - NEVER wrap */
+  header.bg-white.shadow-sm.border-b .flex,
+  header.bg-white.shadow-sm.border-b .flex.items-center {
+    flex-wrap: nowrap !important;
+    flex-direction: row !important;
+  }
+  
+  /* Tables and table containers - prevent overflow */
+  .card .overflow-x-auto {
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Card padding adjustment for mobile - prevent overflow */
+  .card {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    width: calc(100% - 1rem);
+    max-width: calc(100% - 1rem);
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+  
+  /* Card flex containers - prevent icons from expanding */
+  .card .flex.items-center,
+  .card .flex.items-center.justify-between,
+  [class*="rounded-xl"].p-6 .flex.items-center,
+  [class*="rounded-xl"].p-6 .flex.items-center.justify-between {
+    flex-wrap: nowrap !important;
+  }
+  
+  /* Card icon containers must never expand */
+  .card div[class*="bg-gradient-to-br"][class*="rounded"],
+  [class*="rounded-xl"] div[class*="bg-gradient-to-br"][class*="rounded"],
+  [class*="bg-gradient"] div[class*="bg-gradient-to-br"][class*="rounded"] {
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+    max-width: none !important;
+  }
+  
+  /* Admin dashboard cards - prevent overflow */
+  body > main .card {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    width: calc(100% - 1rem);
+    max-width: calc(100% - 1rem);
+    box-sizing: border-box;
+  }
+  
+  /* Ensure tables inside cards take full available width */
+  .card table {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+  
+  /* Form containers - prevent overflow */
+  form {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
+  }
+  
+  /* Grid items on mobile - prevent overflow */
+  .grid {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  
+  .grid > * {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Grid cards with icons - ensure icons stay fixed size */
+  .grid > div[class*="bg-"] .w-12.h-12,
+  .grid > div[class*="bg-"] .w-14.h-14,
+  .grid > div[class*="bg-"] .w-16.h-16 {
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+    max-width: none !important;
+  }
+  
+  /* Grid card flex containers */
+  .grid > div[class*="bg-"] .flex.items-center,
+  .grid > div[class*="bg-"] .flex.items-center.justify-between {
+    flex-wrap: nowrap !important;
+    gap: 0.5rem !important;
+  }
+  
+  /* Grid card text content should wrap, not icons */
+  .grid > div[class*="bg-"] .flex.items-center > div:not([class*="w-"]) {
+    flex: 1 !important;
+    min-width: 0 !important;
+  }
+  
+  /* CRITICAL OVERRIDE: Prevent universal selector from affecting ALL icon containers */
+  [class*="w-12"][class*="h-12"],
+  [class*="w-14"][class*="h-14"],
+  [class*="w-16"][class*="h-16"],
+  div.w-12.h-12,
+  div.w-14.h-14,
+  div.w-16.h-16 {
+    max-width: none !important;
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+  }
+  
+  /* Form grids */
+  form .grid {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Responsive grid adjustments */
+  .table-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Ensure main content doesn't prevent scrolling */
+  main {
+    overflow-x: hidden !important;
+    max-width: 100vw;
+    width: 100%;
+  }
+  
+  /* Admin dashboard specific - content sections */
+  body > main > div > div {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  
+  /* Remove margins from admin dashboard sections */
+  body > main > div > div.mb-8,
+  body > main > div > div.mb-6 {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    width: calc(100% - 1rem);
+    max-width: calc(100% - 1rem);
+  }
+  
+  /* Header sections with buttons - but NOT header */
+  .flex.items-center.justify-between:not(header .flex):not(header > div > div) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .flex.items-center.justify-between:not(header .flex):not(header > div > div) > * {
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  /* Button groups - but NOT header */
+  .flex.gap-2:not(header .flex),
+  .flex.gap-3:not(header .flex),
+  .flex.gap-4:not(header .flex) {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  
+  /* Header must stay in row - override any column rules */
+  header .flex.items-center.justify-between,
+  header > div > div.flex.items-center.justify-between {
+    flex-direction: row !important;
+    align-items: center !important;
+  }
+  
+  /* Filter tabs */
+  .flex.flex-wrap.items-center.gap-4 {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  /* Prevent text overflow */
+  h1, h2, h3, h4, h5, h6, p, span {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+  }
+  
+  /* Compact buttons on mobile */
+  .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+  
+  /* Compact titles on mobile */
+  h1 {
+    font-size: 1.5rem !important;
+    line-height: 1.3;
+  }
+  
+  h2 {
+    font-size: 1.25rem !important;
+    line-height: 1.3;
+  }
+  
+  /* Home Page Header - Fully Responsive - Force Row Layout */
+  /* Targeting only the main site header, not admin dashboard */
+  #main-header {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  #main-header > .container {
+    max-width: 95% !important;
+  }
+  
+  #main-header > div {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  
+  /* Main header flex container - ALWAYS row, NEVER wrap */
+  #main-header nav {
+    width: 100%;
+    max-width: 100%;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 0.5rem;
+  }
+  
+  /* Left section - Logo - NEVER wrap, don't grow */
+  #main-header nav > a:first-child {
+    flex: 0 0 auto !important;
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    gap: 0.5rem;
+    min-width: 0;
+    max-width: fit-content;
+  }
+  
+  /* Right section - Toggle button - NEVER wrap, push to right */
+  #main-header nav > button.mobile-menu-toggle {
+    flex: 0 0 auto !important;
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    gap: 0.5rem;
+    margin-left: auto !important;
+    max-width: fit-content;
+  }
+  
+  /* Ensure all main header elements don't shrink and stay in row */
+  #main-header button,
+  #main-header a,
+  #main-header img,
+  #main-header span,
+  #main-header div {
+    flex-shrink: 0 !important;
+  }
+  
+  /* Hide search input and website link on mobile - override Tailwind - Main header only */
+  @media (max-width: 767px) {
+    /* These rules are for home page header only, not admin dashboard */
+    /* Left empty intentionally - no longer needed for main header */
+  }
+  
+  /* Desktop navigation - Main header only */
+  @media (min-width: 1024px) {
+    #main-header nav > div.hidden.lg\\:flex {
+      display: flex !important;
+      visibility: visible !important;
+    }
+  }
+  
+  /* Mobile specific adjustments - Main header only */
+  @media (max-width: 767px) {
+    #main-header nav {
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
+      gap: 0.5rem;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      justify-content: space-between !important;
+    }
+    
+    #main-header nav > a:first-child {
+      gap: 0.5rem;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      flex: 0 0 auto !important;
+      flex-grow: 0 !important;
+      max-width: fit-content;
+    }
+    
+    #main-header nav > button.mobile-menu-toggle {
+      gap: 0.5rem;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      flex: 0 0 auto !important;
+      flex-grow: 0 !important;
+      margin-left: auto !important;
+      max-width: fit-content;
+    }
+    
+    /* Hide desktop navigation on mobile */
+    #main-header nav > div.hidden {
+      display: none !important;
+    }
+    
+    /* Hide desktop auth buttons on mobile */
+    #main-header nav > div.hidden.lg\\:flex {
+      display: none !important;
+    }
+  }
+  
+  /* Greeting section compact */
+  main > div > div:first-child {
+    padding-top: 0.75rem;
+    padding-bottom: 0.5rem;
+  }
+  
+  /* Dashboard headers - ensure right alignment */
+  body:not(.admin-dashboard) header {
+    width: 100% !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+  }
+  
+  body:not(.admin-dashboard) header > div {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+  
+  body:not(.admin-dashboard) header > div > div:last-child {
+    margin-left: auto !important;
+    flex-shrink: 0 !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+  }
+  
+  /* Ensure notification and profile stay visible and aligned right */
+  body:not(.admin-dashboard) header .ml-auto {
+    margin-left: auto !important;
+  }
+  
+  body:not(.admin-dashboard) header a[href*="notifications"],
+  body:not(.admin-dashboard) header .flex.items-center.gap-2,
+  body:not(.admin-dashboard) header .flex.items-center.gap-4 {
+    flex-shrink: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+  }
+  
+  /* Mobile specific dashboard header fixes */
+  @media (max-width: 767px) {
+    body:not(.admin-dashboard) header {
+      overflow-x: hidden !important;
+      overflow-y: visible !important;
+      width: 100% !important;
+      max-width: 100vw !important;
+      box-sizing: border-box !important;
+    }
+    
+    body:not(.admin-dashboard) header > div {
+      padding-left: 0.75rem !important;
+      padding-right: 0.75rem !important;
+      padding-top: 0.75rem !important;
+      padding-bottom: 0.75rem !important;
+      gap: 0.5rem !important;
+      overflow-x: hidden !important;
+      overflow-y: visible !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      position: relative !important;
+    }
+    
+    body:not(.admin-dashboard) header > div > div:last-child {
+      gap: 0.5rem !important;
+      margin-left: auto !important;
+      margin-right: 0 !important;
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      justify-content: flex-end !important;
+      flex-shrink: 0 !important;
+      overflow: visible !important;
+      max-width: calc(100% - 60px) !important;
+      min-width: 0 !important;
+      padding-right: 0 !important;
+      box-sizing: border-box !important;
+      position: relative !important;
+    }
+    
+    body:not(.admin-dashboard) header button,
+    body:not(.admin-dashboard) header a,
+    body:not(.admin-dashboard) header img,
+    body:not(.admin-dashboard) header div {
+      flex-shrink: 0 !important;
+      min-width: 0 !important;
+      box-sizing: border-box !important;
+    }
+    
+    /* Hard enforce notification icon to right on mobile */
+    body:not(.admin-dashboard) header a[href*="notifications"] {
+      position: relative !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      margin-left: auto !important;
+      margin-right: 0 !important;
+      flex-shrink: 0 !important;
+      order: 1 !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      width: 36px !important;
+      height: 36px !important;
+      overflow: visible !important;
+      box-sizing: border-box !important;
+    }
+    
+    body:not(.admin-dashboard) header > div > div:last-child > a[href*="notifications"] {
+      margin-left: auto !important;
+      margin-right: 0 !important;
+      order: 1 !important;
+      display: flex !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      overflow: visible !important;
+      box-sizing: border-box !important;
+    }
+    
+    /* Hard enforce profile image to right after notification */
+    body:not(.admin-dashboard) header > div > div:last-child > div:last-child {
+      order: 2 !important;
+      margin-left: 0.5rem !important;
+      margin-right: 0 !important;
+      flex-shrink: 0 !important;
+      display: flex !important;
+      align-items: center !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      position: relative !important;
+      overflow: visible !important;
+      max-width: 40px !important;
+      min-width: 40px !important;
+      padding-right: 0 !important;
+      box-sizing: border-box !important;
+    }
+    
+    /* Hard enforce profile image itself */
+    body:not(.admin-dashboard) header > div > div:last-child > div:last-child img,
+    body:not(.admin-dashboard) header > div > div:last-child > div:last-child > div {
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      width: 40px !important;
+      height: 40px !important;
+      min-width: 40px !important;
+      min-height: 40px !important;
+      max-width: 40px !important;
+      max-height: 40px !important;
+      flex-shrink: 0 !important;
+      border-radius: 50% !important;
+      position: relative !important;
+      overflow: visible !important;
+      margin-right: 0 !important;
+      box-sizing: border-box !important;
+    }
+    
+    /* Ensure right section container is properly aligned and doesn't overflow */
+    body:not(.admin-dashboard) header > div > div:last-child {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      justify-content: flex-end !important;
+      margin-left: auto !important;
+      margin-right: 0 !important;
+      flex-shrink: 0 !important;
+      overflow: visible !important;
+      max-width: calc(100% - 60px) !important;
+      min-width: 0 !important;
+      padding-right: 0 !important;
+      box-sizing: border-box !important;
+    }
+    
+    /* Ensure profile image stays within viewport */
+    body:not(.admin-dashboard) header > div > div:last-child > div:last-child {
+      max-width: 40px !important;
+      min-width: 40px !important;
+      margin-right: 0 !important;
+      padding-right: 0 !important;
+    }
+  }
+}
+
+/* Home Page Header - Mobile Menu Styles */
+#main-header #mobileMenu {
+  display: none;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+#main-header #mobileMenu:not(.hidden) {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+#main-header #mobileMenuBtn {
+  z-index: 10;
+  position: relative;
+}
+
+/* Ensure desktop navigation shows on desktop */
+@media (min-width: 1024px) {
+  #main-header nav > div.hidden.lg\\:flex,
+  #main-header nav > div[class*="hidden"][class*="lg:flex"] {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  /* Ensure desktop auth buttons show */
+  #main-header nav > div.hidden.lg\\:flex:last-child {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Dashboard Card Icons - Match Desktop Exactly on Mobile */
+@media (max-width: 767px) {
+  /* Stats cards - icon containers (w-12 h-12 = 48px) */
+  .grid > div[class*="bg-gradient"] > div > div[class*="flex"] > div.w-12.h-12,
+  .grid > div[class*="bg-white"] > div > div[class*="flex"] > div.w-12.h-12 {
+    width: 3rem !important; /* 48px */
+    height: 3rem !important; /* 48px */
+    min-width: 3rem !important;
+    min-height: 3rem !important;
+    max-width: 3rem !important;
+    max-height: 3rem !important;
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+  
+  /* Admin dashboard - larger icon containers (w-16 h-16 = 64px) */
+  .grid > div[class*="bg-white"] > div > div[class*="flex"] > div.w-16.h-16 {
+    width: 4rem !important; /* 64px */
+    height: 4rem !important; /* 64px */
+    min-width: 4rem !important;
+    min-height: 4rem !important;
+    max-width: 4rem !important;
+    max-height: 4rem !important;
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+  
+  /* Secondary stats cards - smaller icon containers (w-14 h-14 = 56px) */
+  div[class*="bg-gradient"] > div > div[class*="flex"] > div.w-14.h-14 {
+    width: 3.5rem !important; /* 56px */
+    height: 3.5rem !important; /* 56px */
+    min-width: 3.5rem !important;
+    min-height: 3.5rem !important;
+    max-width: 3.5rem !important;
+    max-height: 3.5rem !important;
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+  
+  /* Management section cards - icon containers (w-14 h-14 = 56px) */
+  a[class*="bg-white"] > div[class*="flex"] > div.w-14.h-14 {
+    width: 3.5rem !important; /* 56px */
+    height: 3.5rem !important; /* 56px */
+    min-width: 3.5rem !important;
+    min-height: 3.5rem !important;
+    max-width: 3.5rem !important;
+    max-height: 3.5rem !important;
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+  
+  /* Notification bar icons (w-12 h-12 = 48px) */
+  div.w-12.h-12[class*="bg-primary"] {
+    width: 3rem !important; /* 48px */
+    height: 3rem !important; /* 48px */
+    min-width: 3rem !important;
+    min-height: 3rem !important;
+    max-width: 3rem !important;
+    max-height: 3rem !important;
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+  
+  /* Ensure icons inside maintain proper size */
+  div.w-12.h-12 i,
+  div.w-16.h-16 i,
+  div.w-14.h-14 i {
+    font-size: inherit !important;
+    line-height: 1 !important;
+  }
+  
+  /* Prevent any flex expansion in icon containers */
+  div[class*="flex"][class*="items-center"][class*="justify-between"] > div[class*="rounded-xl"][class*="bg-"]:last-child,
+  div[class*="flex"][class*="items-center"][class*="justify-between"] > div[class*="rounded-full"][class*="bg-"]:last-child {
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+}
+
+#main-header #mobileMenuBtn i {
+  transition: transform 0.3s ease;
+}
+
+/* Ensure mobile menu is visible when toggled */
+@media (max-width: 1023px) {
+  #main-header #mobileMenu:not(.hidden) {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  
+  #main-header #mobileMenu.hidden {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+}
+
+/* Custom scrollbar for tables */
+.overflow-x-auto::-webkit-scrollbar {
+  height: 8px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-track {
+  /* background: #f1f5f9; */
+  border-radius: 10px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 10px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Animation Classes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes bounceSlow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 1s ease-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.8s ease-out;
+}
+
+.animate-slide-up-delay {
+  animation: slideUp 0.8s ease-out 0.2s both;
+}
+
+.animate-slide-up-delay-2 {
+  animation: slideUp 0.8s ease-out 0.4s both;
+}
+
+.animate-fade-in-left {
+  animation: slideInLeft 1s ease-out;
+}
+
+.animate-fade-in-right {
+  animation: slideInRight 1s ease-out;
+}
+
+/* Preloader Styles */
+.preloader-content {
+  position: relative;
+  animation: preloaderFadeIn 0.5s ease-in;
+}
+
+.preloader-image {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  animation: heartbeat 1.5s ease-in-out infinite;
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.15));
+  border-radius: 20px;
+}
+
+@keyframes preloaderFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes heartbeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  10% {
+    transform: scale(1.1);
+  }
+  20% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.1);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+
+/* Mobile responsive preloader */
+@media (max-width: 768px) {
+  .preloader-image {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+.animate-fade-in-up {
+  animation: slideUp 0.6s ease-out both;
+}
+
+.animate-bounce-slow {
+  animation: bounceSlow 3s ease-in-out infinite;
+}
+
+/* Smooth transitions for all interactive elements */
+.card,
+.property-card,
+.btn {
+  transition: all 0.3s ease;
+}
+
+/* Hover effects */
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* Section centering */
+section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+section > .container {
+  width: 100%;
+}
